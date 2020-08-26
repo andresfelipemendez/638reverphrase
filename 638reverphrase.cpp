@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include <map>
+#include <vector>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -56,5 +58,46 @@ namespace My638reverphrase
 			Assert::AreEqual("cd ab", reversePhrase("ab cd").c_str());
 			Assert::AreEqual("here world hello", reversePhrase("hello world here").c_str());
 		}
+	};
+}
+
+
+namespace My639mappingDigitsToLetters
+{
+	TEST_CLASS(My639mappingDigitsToLetters)
+	{
+	public:
+		std::map<int, std::string> numberToLetters = {
+			{2, "abc"},
+			{3, "def"},
+			{4, "ghi"},
+			{5, "jkl"},
+			{6, "mno"},
+			{7, "pqrs"},
+			{8, "tuv"},
+			{9, "wxyz"},
+		};
+
+		std::string combine(int a, int b) {
+			std::string res;
+			std::string left = numberToLetters.at(a);
+			std::string right = numberToLetters.at(b);
+			for (char l : left) {
+				for (char r : right) {
+					res += l;
+					res += r;
+					res += ", ";
+				}
+			}
+			res.pop_back();
+			res.pop_back();
+			return res;
+		}
+		TEST_METHOD(mappingInitialFailingTest)
+		{
+			Assert::AreEqual(combine(2, 3).c_str(), "ad, ae, af, bd, be, bf, cd, ce, cf");
+			
+		}
+
 	};
 }
